@@ -4,6 +4,7 @@ use app::App;
 use ratatui::{TerminalOptions, Viewport};
 
 mod app;
+mod calendar;
 fn main() -> io::Result<()> {
     let mut app = App::new();
     println!("\n");
