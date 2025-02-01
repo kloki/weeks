@@ -2,6 +2,11 @@
 name = "weeks"
 version = "0.1.0"
 edition = "2021"
+description = "ncal alternative that works for me"
+license = "MIT OR Apache-2.0"
+repository = "https://github.com/kloki/weeks"
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
 
 [dependencies]
 chrono = "0.4.39"
