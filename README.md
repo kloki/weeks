@@ -1,3 +1,5 @@
+![Example](./example.png)
+
 # Weeks
 
 ncal version that works for me.
@@ -5,8 +7,7 @@ ncal version that works for me.
 ## Install
 
 ```
-git clone ..
-cargo install --path ./
+cargo install weeks
 ```
 
 ## Run
@@ -14,3 +15,5 @@ cargo install --path ./
 ```
 weeks
 ```
+
+Use left and right arrow keys to move the backwards and forwards.
