@@ -97,6 +97,56 @@ impl Days {
             ],
         }
     }
+    pub fn years(&self) -> Line {
+        let mut years = vec![' '; (self.days[0].len() + 1) * 3];
+
+        let y: Vec<char> = self.days[6][0].year().to_string().chars().collect();
+        years[1] = y[0];
+        years[2] = y[1];
+        years[3] = y[2];
+        years[4] = y[3];
+        for i in 1..(self.days[6].len() - 3) {
+            if self.days[6][i - 1].year() != self.days[6][i].year() {
+                let y: Vec<char> = self.days[6][i].year().to_string().chars().collect();
+                years[i * 3 + 1] = y[0];
+                years[i * 3 + 2] = y[1];
+                years[i * 3 + 3] = y[2];
+                years[i * 3 + 4] = y[3];
+            }
+        }
+
+        if years[5] != ' ' {
+            years[1] = ' ';
+            years[2] = ' ';
+            years[3] = ' ';
+        }
+
+        years.into_iter().collect::<String>().into()
+    }
+    pub fn months(&self) -> Line {
+        let mut months = vec![' '; (self.days[0].len() + 1) * 3];
+
+        let month_name = named_months(self.days[6][0].month0());
+        months[1] = month_name[0];
+        months[2] = month_name[1];
+        months[3] = month_name[2];
+        for i in 1..(self.days[6].len() - 2) {
+            if self.days[6][i - 1].month() != self.days[6][i].month() {
+                let month_name = named_months(self.days[6][i].month0());
+                months[i * 3 + 1] = month_name[0];
+                months[i * 3 + 2] = month_name[1];
+                months[i * 3 + 3] = month_name[2];
+            }
+        }
+
+        if months[4] != ' ' {
+            months[1] = ' ';
+            months[2] = ' ';
+            months[3] = ' ';
+        }
+
+        months.into_iter().collect::<String>().into()
+    }
 
     pub fn iso_weeks(&self) -> Line {
         let mut week_numbers = " ".to_string();
@@ -161,5 +211,22 @@ impl Days {
             ));
         }
         days.into()
+    }
+}
+pub fn named_months(index: u32) -> [char; 3] {
+    match index {
+        0 => ['J', 'a', 'n'],
+        1 => ['F', 'e', 'b'],
+        2 => ['M', 'a', 'r'],
+        3 => ['A', 'p', 'r'],
+        4 => ['M', 'a', 'y'],
+        5 => ['J', 'u', 'n'],
+        6 => ['J', 'u', 'l'],
+        7 => ['A', 'u', 'g'],
+        8 => ['S', 'e', 'p'],
+        9 => ['O', 'c', 't'],
+        10 => ['N', 'o', 'v'],
+        11 => ['D', 'e', 'c'],
+        _ => ['W', 'F', 'T'], // "WFT" for invalid index
     }
 }

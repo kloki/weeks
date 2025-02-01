@@ -38,6 +38,8 @@ impl App {
         let days = self.calendar.frame_data(f.area().width);
         let mut text = Text::default();
 
+        text.push_line(days.years());
+        text.push_line(days.months());
         text.push_line(days.iso_weeks());
         text.push_line(days.monday());
         text.push_line(days.tuesday());
