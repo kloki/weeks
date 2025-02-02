@@ -26,8 +26,8 @@ impl App {
                 match key.code {
                     KeyCode::Char('q') => return Ok(()),
                     KeyCode::Esc => return Ok(()),
-                    KeyCode::Right => self.calendar.increase(),
-                    KeyCode::Left => self.calendar.decrease(),
+                    KeyCode::Right => self.calendar.next_week(),
+                    KeyCode::Left => self.calendar.prev_week(),
                     _ => {}
                 }
             }
