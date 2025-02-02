@@ -13,7 +13,10 @@ impl Calendar {
         let first_day_of_month = NaiveDate::from_ymd_opt(now.year(), now.month(), 1).unwrap();
         let start = first_day_of_month.week(Weekday::Mon).first_day();
 
-        Self { start }
+        let mut cal = Self { start };
+        cal.prev_week();
+        cal.prev_week();
+        cal
     }
 
     pub fn next_week(&mut self) {
