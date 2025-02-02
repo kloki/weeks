@@ -1,6 +1,6 @@
 [package]
 name = "weeks"
-version = "0.1.2"
+version = "0.1.3"
 edition = "2021"
 description = "ncal alternative that works for me"
 license = "MIT OR Apache-2.0"
