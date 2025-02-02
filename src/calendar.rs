@@ -16,7 +16,7 @@ impl Calendar {
         Self { start }
     }
 
-    pub fn increase(&mut self) {
+    pub fn next_week(&mut self) {
         self.start = self
             .start
             .succ_opt()
@@ -35,7 +35,7 @@ impl Calendar {
             .unwrap()
     }
 
-    pub fn decrease(&mut self) {
+    pub fn prev_week(&mut self) {
         self.start = self
             .start
             .pred_opt()
@@ -75,7 +75,7 @@ impl Days {
         let mut saturdays = vec![];
         let mut sundays = vec![];
 
-        for _ in 0..width {
+        for _ in 0..(width / 3) {
             mondays.push(start);
             start = start.succ_opt().unwrap();
             tuesdays.push(start);
@@ -98,58 +98,64 @@ impl Days {
         }
     }
     pub fn years(&self) -> Line {
-        let mut years = vec![' '; (self.days[0].len() + 1) * 3];
+        let mut years = vec![' '; (self.days[0].len() + 2) * 3];
 
         let y: Vec<char> = self.days[6][0].year().to_string().chars().collect();
-        years[1] = y[0];
-        years[2] = y[1];
-        years[3] = y[2];
-        years[4] = y[3];
+        years[2] = y[0];
+        years[3] = y[1];
+        years[4] = y[2];
+        years[5] = y[3];
         for i in 1..(self.days[6].len() - 3) {
             if self.days[6][i - 1].year() != self.days[6][i].year() {
                 let y: Vec<char> = self.days[6][i].year().to_string().chars().collect();
-                years[i * 3 + 1] = y[0];
-                years[i * 3 + 2] = y[1];
-                years[i * 3 + 3] = y[2];
-                years[i * 3 + 4] = y[3];
+                years[i * 3 + 2] = y[0];
+                years[i * 3 + 3] = y[1];
+                years[i * 3 + 4] = y[2];
+                years[i * 3 + 5] = y[3];
             }
         }
 
-        if years[5] != ' ' {
-            years[1] = ' ';
+        if years[6] != ' ' {
             years[2] = ' ';
             years[3] = ' ';
+            years[4] = ' ';
         }
 
-        years.into_iter().collect::<String>().into()
+        Line::styled(
+            years.into_iter().collect::<String>(),
+            Style::default().fg(Color::Blue),
+        )
     }
     pub fn months(&self) -> Line {
-        let mut months = vec![' '; (self.days[0].len() + 1) * 3];
+        let mut months = vec![' '; (self.days[0].len() + 2) * 3];
 
         let month_name = named_months(self.days[6][0].month0());
-        months[1] = month_name[0];
-        months[2] = month_name[1];
-        months[3] = month_name[2];
+        months[2] = month_name[0];
+        months[3] = month_name[1];
+        months[4] = month_name[2];
         for i in 1..(self.days[6].len() - 2) {
             if self.days[6][i - 1].month() != self.days[6][i].month() {
                 let month_name = named_months(self.days[6][i].month0());
-                months[i * 3 + 1] = month_name[0];
-                months[i * 3 + 2] = month_name[1];
-                months[i * 3 + 3] = month_name[2];
+                months[i * 3 + 2] = month_name[0];
+                months[i * 3 + 3] = month_name[1];
+                months[i * 3 + 4] = month_name[2];
             }
         }
 
-        if months[4] != ' ' {
-            months[1] = ' ';
+        if months[5] != ' ' {
             months[2] = ' ';
             months[3] = ' ';
+            months[4] = ' ';
         }
 
-        months.into_iter().collect::<String>().into()
+        Line::styled(
+            months.into_iter().collect::<String>(),
+            Style::default().fg(Color::Magenta),
+        )
     }
 
     pub fn iso_weeks(&self) -> Line {
-        let mut week_numbers = " ".to_string();
+        let mut week_numbers = "  ".to_string();
         for d in self.days[0].iter() {
             week_numbers.push_str(&format!("{:3}", d.iso_week().week()))
         }
@@ -186,7 +192,7 @@ impl Days {
 
     pub fn _build_days(&self, letter: char, index: usize) -> Line {
         let mut days = vec![Span::styled(
-            letter.to_string(),
+            format!(" {}", letter),
             Style::default().fg(Color::Green),
         )];
         let today = Utc::now();
@@ -201,7 +207,7 @@ impl Days {
             if d.month() % 2 == 0 {
                 days.push(Span::styled(
                     format!("{:3}", d.day()),
-                    Style::default().fg(Color::White),
+                    Style::default().fg(Color::White).bg(Color::DarkGray),
                 ));
                 continue;
             }
@@ -227,6 +233,6 @@ pub fn named_months(index: u32) -> [char; 3] {
         9 => ['O', 'c', 't'],
         10 => ['N', 'o', 'v'],
         11 => ['D', 'e', 'c'],
-        _ => ['W', 'F', 'T'], // "WFT" for invalid index
+        _ => ['W', 'F', 'T'],
     }
 }
