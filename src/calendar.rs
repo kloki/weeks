@@ -203,7 +203,7 @@ impl Days {
             if d.day() == today.day() && d.month() == today.month() && d.year() == today.year() {
                 days.push(Span::styled(
                     format!("{:3}", d.day()),
-                    Style::default().fg(Color::White).bg(Color::Red),
+                    Style::default().fg(Color::White).bg(Color::Magenta),
                 ));
                 continue;
             }
