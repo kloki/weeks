@@ -16,4 +16,10 @@ cargo install weeks
 weeks
 ```
 
+or for an interactive mode
+
+```
+weeks -i
+```
+
 Use left and right arrow keys to move the backwards and forwards.
