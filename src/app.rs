@@ -19,7 +19,11 @@ impl App {
         }
     }
 
-    pub fn run<B: Backend>(&mut self, term: &mut Terminal<B>) -> io::Result<()> {
+    pub fn run<B: Backend>(&mut self, term: &mut Terminal<B>, interactive: bool) -> io::Result<()> {
+        term.draw(|f| self.draw(f))?;
+        if !interactive {
+            return Ok(());
+        }
         loop {
             term.draw(|f| self.draw(f))?;
             if let Event::Key(key) = event::read()? {

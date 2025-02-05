@@ -1,6 +1,6 @@
 [package]
 name = "weeks"
-version = "0.1.3"
+version = "0.1.4"
 edition = "2021"
 description = "ncal alternative that works for me"
 license = "MIT OR Apache-2.0"
@@ -10,4 +10,5 @@ repository = "https://github.com/kloki/weeks"
 
 [dependencies]
 chrono = "0.4.39"
+clap = { version = "4.5.28", features = ["derive"] }
 ratatui = "0.29.0"
